@@ -84,8 +84,8 @@ JetsonCommander jc(&nh);  //$ Jetson commander
 
 //PIDController(long kp, long ki, long kd, long out_max, long out_min)
 //Note from DGonz: Low kP, some kI and no kD is best for wheel velocities. 
-PIDController lSp(40, 8, 1, 500, -500); //$ left drive motor PID controller
-PIDController rSp(40, 8, 1, 500, -500); //$ right drive motor PID controller
+PIDController lSp(30, 4, 0, 500, -500); //$ left drive motor PID controller
+PIDController rSp(30, 4, 0, 500, -500); //$ right drive motor PID controller
 
 /*$ The PID controllers for the drive motors are only active in AUTO mode.
  */
@@ -132,15 +132,14 @@ void ModeCallback(const std_msgs::UInt8& mode) {
   autonomy type, not necessarily whether or not the car 
   is autonomous.
   */
-
-  if (jc._autonomous > 0)
-  {
+//  if (jc._autonomous > 0)
+//  {
     /*$ 
     If the car is not in RC mode when the callback occurs,
     we want the change to take effect immediately.
     */
     jc._autonomous = jc._autonomy_type;
-  }
+//  }
 }
 
 
@@ -227,7 +226,7 @@ void setup() {
           ros::Publisher *mot_pub
           ) */
    
-  Context context(&rc, &servo, &left, &right, L_MOTOR_PWM_PIN, R_MOTOR_PWM_PIN, L_MOTOR_REVERSE_PIN, R_MOTOR_REVERSE_PIN, &lSp, &rSp, &pPos, &nh, &jc, &logic_bat, &radio_msg, &radio_pub, &steer_msg, &steer_pub, &mot_msg, &mot_pub, &stop_msg, &stop_pub, &voltage_msg, &voltage_pub);
+  Context context(&rc, &servo, &left, &right, L_MOTOR_PWM_PIN, R_MOTOR_PWM_PIN, L_MOTOR_REVERSE_PIN, R_MOTOR_REVERSE_PIN, &lSp, &rSp, &pPos, &nh, &jc, &logic_bat, &radio_msg, &radio_pub, &steer_msg, &steer_pub, &mot_msg, &mot_pub, &mode_msg, &mode_pub, &voltage_msg, &voltage_pub);
 
   // Context::ConfigureLoop(int sInterval, int pInterval);
   context.ConfigureLoop(S_LOOP_INTERVAL, LOOP_INTERVAL, PUB_INTERVAL);

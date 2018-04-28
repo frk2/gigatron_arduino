@@ -158,6 +158,7 @@
     unsigned long d_pub = t - _last_pub;
 
     // KILLSWITCH ENGAGE \m/
+    /*
     if (_commander->GetKillCmd() > 75)
     {
       if (_jcommander->_autonomous == 0)
@@ -169,7 +170,7 @@
     else {
       _jcommander->_autonomous = 0;
     }
-
+*/
     //$ left and right speed commands
     int lSpC;
     int rSpC;
