@@ -55,7 +55,8 @@ RCCommander::RCCommander(RCDecoder *sp, RCDecoder *pos, RCDecoder *kill) {
   _kill = kill;
 }
 
-int RCCommander::GetLeftRPMCmd() {
+int RCCommander::GetLeftRPMCmd() { 
+  if (_sp->GetVal() < 50) return 0;
   int left_command = 2 * (int) _sp->GetVal() - 255;
 
   //$ check edge cases
@@ -66,6 +67,7 @@ int RCCommander::GetLeftRPMCmd() {
 }
 
 int RCCommander::GetRightRPMCmd() {
+  if (_sp->GetVal() < 50) return 0;  
   int right_command = 2 * (int) _sp->GetVal() - 255;
 
   //$ check edge cases

@@ -51,9 +51,9 @@ DCServo::DCServo(int pwmPin1, int pwmPin2, int posPin) {
   _pwmPin1 = pwmPin1;
   _pwmPin2 = pwmPin2;
   _posPin = posPin;
-  _minV = 0;
-  _midV = 511;
-  _maxV = 1023;
+  _minV = 378;
+  _midV = 574;
+  _maxV = 800;
   
   pinMode(_pwmPin1, OUTPUT);
   pinMode(_pwmPin2, OUTPUT);
@@ -85,14 +85,14 @@ unsigned char DCServo::GetPos() {
   tmp /= (_maxV - _minV);
   if (tmp < 0) tmp = 0;
   if (tmp > 255) tmp = 255;
-  //dp(tmp);
+//  dp(tmp);
   return (unsigned char) tmp;
 }
 
 //$ takes pot limits and middle value and linearizes the output
 unsigned char DCServo::GetPosLinearized() {
   long adu = analogRead(_posPin);
-  // dp(adu); //$ uncomment for pot calibration
+  //dp(adu); //$ uncomment for pot calibration
   long tmp;
   if (adu < _midV) {
     tmp = (adu - _minV) << 7 ;;

@@ -158,7 +158,7 @@
     unsigned long d_pub = t - _last_pub;
 
     // KILLSWITCH ENGAGE \m/
-    /*
+    
     if (_commander->GetKillCmd() > 75)
     {
       if (_jcommander->_autonomous == 0)
@@ -170,7 +170,7 @@
     else {
       _jcommander->_autonomous = 0;
     }
-*/
+
     //$ left and right speed commands
     int lSpC;
     int rSpC;
@@ -201,6 +201,7 @@ if (d_st > _sInterval) {  //$ speed (drive motor) loop
 
         if (_jcommander->_estop) //$ estopped
         {
+          
           //$ MAKE IT STOP!
           lRPM_cmd = 0;
           rRPM_cmd = 0;
@@ -229,7 +230,7 @@ if (d_st > _sInterval) {  //$ speed (drive motor) loop
           _rSp->ResetIntegrator();
           //$ so it won't go berserk after estop is released
           
-          if (_jcommander->_autonomous == 1) //$ estopped in semiautomatic mode
+          if (_jcommander->_autonomous > 0) //$ estopped in semiautomatic mode
           {
             //$ update PID controllers with target velocity zero
             lSpC = _lSp->Update(0, lRPM_sensed);

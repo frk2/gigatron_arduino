@@ -70,10 +70,12 @@ unsigned char RCDecoder::GetVal() {
     pw = _pw1_us;
   }if (_interrupt == RC_KILL_INTERRUPT) {
     pw = _pw2_us;
+    if (pw <= _minV) pw = 0;
+    if (pw > _maxV) pw = 255;
+    return pw; 
   }
   
   //Serial.println(pw); //RC decoder vals
-  //dp(pw);
   pw = (pw - _minV) << 8;
   pw /= (_maxV - _minV);
   if (pw < 0) pw = 0;

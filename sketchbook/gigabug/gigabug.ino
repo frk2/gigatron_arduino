@@ -73,9 +73,9 @@
 #define PUB_INTERVAL 100
 
 //$ steering pot calibration 2017-01-21
-int minADU = 493; //$ max right
-int midADU = 598; //$ value at zero steering angle
-int maxADU = 675; //$ max left
+int minADU = 425; //$ max right
+int midADU = 619; //$ value at zero steering angle
+int maxADU = 850; //$ max left
 
 ros::NodeHandle nh;       //$ node handle
 
@@ -84,8 +84,8 @@ JetsonCommander jc(&nh);  //$ Jetson commander
 
 //PIDController(long kp, long ki, long kd, long out_max, long out_min)
 //Note from DGonz: Low kP, some kI and no kD is best for wheel velocities. 
-PIDController lSp(30, 4, 0, 500, -500); //$ left drive motor PID controller
-PIDController rSp(30, 4, 0, 500, -500); //$ right drive motor PID controller
+PIDController lSp(40, 3, 0, 500, -500); //$ left drive motor PID controller
+PIDController rSp(40, 3, 0, 500, -500); //$ right drive motor PID controller
 
 /*$ The PID controllers for the drive motors are only active in AUTO mode.
  */
@@ -132,14 +132,14 @@ void ModeCallback(const std_msgs::UInt8& mode) {
   autonomy type, not necessarily whether or not the car 
   is autonomous.
   */
-//  if (jc._autonomous > 0)
-//  {
+  if (jc._autonomous > 0)
+  {
     /*$ 
     If the car is not in RC mode when the callback occurs,
     we want the change to take effect immediately.
     */
     jc._autonomous = jc._autonomy_type;
-//  }
+  }
 }
 
 
@@ -198,7 +198,7 @@ void setup() {
   //Was 1480, expanded to add reverse
   RCDecoder sp(RC_THROTTLE_INTERRUPT, 1020, 1990);
   //Was 1480, expanded to add reverse
-  RCDecoder kill(RC_KILL_INTERRUPT, 996, 1988);
+  RCDecoder kill(RC_KILL_INTERRUPT, 996, 1960);
 
   // SpeedSensor(int interrupt, int poles, int interval);
   SpeedSensor left(L_ENCODER_INTERRUPT, 14, S_LOOP_INTERVAL);
